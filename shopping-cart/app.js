@@ -4,11 +4,14 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var expressHbs = require('express-handlebars');
+var mongodb = require('mongoose');
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+mongodb.connect('mongodb://localhost:27017/?retryWrites=true&loadBalanced=false&connectTimeoutMS=10000/shopping');
 
 // view engine setup
 
