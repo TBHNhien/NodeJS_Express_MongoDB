@@ -9,9 +9,15 @@ var mongodb = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
 var app = express();
-mongodb.connect('mongodb://localhost:27017/?retryWrites=true&loadBalanced=false&connectTimeoutMS=10000/shopping');
+
+try {
+    mongodb.connect('mongodb://localhost:27017/?retryWrites=true&loadBalanced=false&connectTimeoutMS=10000/shopping');
+    console.log('Connect Successfully !!');
+}
+catch (error) {
+    console.log('Connect failed !!');
+}
 
 // view engine setup
 
@@ -40,17 +46,19 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+var Product = require('./models/product');
+app.use('/', async function(req, res, next) {
+  
+    Product.find({})
+      .then(product => {
+        console.log(product);
+      })
+      .catch(next)
+  })
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    next(createError(404));
-  });
-
-app.get('/', (req, res) => {
-    res.render('shop/index');
-});
-
 app.listen(3000);
 
 module.exports = app;

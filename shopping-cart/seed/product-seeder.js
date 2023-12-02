@@ -1,11 +1,6 @@
 var Product = require('../models/product');
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/shopping', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
-
 var products = [
     new Product({
         imagePath:"https://lzd-img-global.slatic.net/g/p/0e51255c9a21f7df50f70df52e3e5277.jpg_720x720q80.jpg",
